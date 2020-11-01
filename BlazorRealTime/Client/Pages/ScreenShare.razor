@@ -1,0 +1,23 @@
+﻿
+<p>Name:</p>
+<input @bind-value="@userInput" />
+<button class="btn btn-primary" @onclick="StartCapture" disabled="@(!IsConnected)">Share</button>
+<button class="btn btn-primary" @onclick="StopCapture">Stop share</button>
+<br />
+<h4>Sharing</h4>
+<video @ref="VideoElementReference"  id="video" autoplay hidden></video>
+<canvas id="sent" hidden></canvas>
+
+<div class="text-center">
+    <h4 class="text-center">Image from Signal R</h4>
+    <img id="capturedImg" class="text-center" style="max-height:600px;width:90vw" src="@imgUrl" />
+</div>
+<div class="text-left">
+    <h4>Shared</h4>
+    <canvas id="capture"></canvas>
+</div>
+<h4>Image from javaScript</h4>
+<img id="smallImg" style="height:480px;width:640px" src="@imgUrl" />
+<strong>JS Log:</strong>
+<br>
+<pre id="log"></pre>

@@ -1,0 +1,12 @@
+﻿#video {
+    border: 1px solid #999;
+    width: 98%;
+    max-width: 1640px;
+    height: auto;
+    max-height:1480px
+}
+#capture {
+    width: 98%;
+    border: 1px solid #999;
+    max-width:640px;
+}

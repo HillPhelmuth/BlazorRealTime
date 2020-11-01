@@ -1,0 +1,10 @@
+﻿@page "/screenShare"
+<h1>ShareScreen Agent</h1>
+<div>
+    <h4>Agent Name</h4>
+    <input type="text" @bind-value="agentName" />
+</div>
+<button class="btn btn-primary" disabled="@isCasting" @onclick="StartCasting">Share</button>
+<button class="btn btn-primary" disabled="@notCasting" @onclick="StopCasting">Stop Sharing</button>
+<video id="video" autoplay hidden style="height:100vh;width:100vw"></video>
+<canvas id="screenCanvas" hidden></canvas>

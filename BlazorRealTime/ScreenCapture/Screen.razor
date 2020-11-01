@@ -1,0 +1,21 @@
+﻿<button class="btn btn-primary" @onclick="StartCapture">Start</button>
+<button class="btn btn-primary" @onclick="StopCapture">Stop</button><br />
+<button class="btn btn-primary" @onclick="ShowCapture">Show from JS</button>
+<video @ref="VideoElementReference"id="video" autoplay></video>
+<canvas id="capture"></canvas>
+<br>
+
+<div style="max-height: 250px; overflow:scroll">
+    <ul>
+        @foreach (var str in captureData)
+        {
+            <li>@str</li>
+        }
+    </ul>
+</div>
+<div style="max-height: 250px; overflow: scroll">
+    <textarea id="result"></textarea>
+</div>
+<strong>JS Log:</strong>
+<br>
+<pre id="log"></pre>
