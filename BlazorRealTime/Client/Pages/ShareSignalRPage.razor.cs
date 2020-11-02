@@ -8,14 +8,15 @@ using Microsoft.JSInterop;
 
 namespace BlazorRealTime.Client.Pages
 {
-    public partial class ShareSignalRPage
+    public partial class ShareSignalRPage : IAsyncDisposable
     {
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
         private ShareSignalRInterop ShareSignalR => new ShareSignalRInterop(JsRuntime);
-        private string agentName = "adam";
+        [Parameter]
+        public string AgentName { get; set; } = "adam";
         private bool isCasting = false;
         private bool notCasting => !isCasting;
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -23,14 +24,14 @@ namespace BlazorRealTime.Client.Pages
             var hubUrl = NavigationManager.ToAbsoluteUri("/shareScreen").ToString();
             if (firstRender)
             {
-                await ShareSignalR.InitializeSignalR(hubUrl, agentName);
+                await ShareSignalR.InitializeSignalR(hubUrl, AgentName);
             }
             await base.OnAfterRenderAsync(firstRender);
         }
 
         private async Task StartCasting()
         {
-            await ShareSignalR.StartStreamCast(agentName);
+            await ShareSignalR.StartStreamCast(AgentName);
             isCasting = true;
         }
 
@@ -38,6 +39,11 @@ namespace BlazorRealTime.Client.Pages
         {
             isCasting = false;
             await ShareSignalR.StopStreamCast();
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await ShareSignalR.DisposeAsync();
         }
     }
 }

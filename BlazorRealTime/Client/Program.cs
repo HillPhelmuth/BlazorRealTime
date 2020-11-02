@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
-using ScreenCapture;
+
 
 namespace BlazorRealTime.Client
 {
@@ -21,8 +21,7 @@ namespace BlazorRealTime.Client
             
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress),MaxResponseContentBufferSize = 2024000 });
             //builder.Services.AddScoped<IJSInProcessRuntime>();
-            builder.Services.AddScoped<ScreenCaptureInterop>();
-           
+            
             await builder.Build().RunAsync();
         }
     }

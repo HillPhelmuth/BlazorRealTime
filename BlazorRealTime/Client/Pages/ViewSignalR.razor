@@ -1,35 +1,44 @@
-﻿@page "/viewer"
+﻿
 
-<div class="card border-primary mb-3" style="max-width: 20rem;">
-    @if (agents.Count > 0)
-    {
-        @foreach (var agent in agents)
-        {
-            <div class="card-body">
-                <div>
-                    <h3 class="badge-primary">
-                        @agent
-                    </h3>
-                    <div style="padding-top:10px">
-                        <button id="ViewCast" disabled="@(IsViewingCastOf(agent))" class="btn btn-success btn-sm" @onclick="@(() => OnViewCastClicked(agent))">
-                            View cast
-                        </button>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card border-primary mb-3" style="max-width: 30rem;">
+                @if (agents.Count > 0)
+                {
+                    @foreach (var agent in agents)
+                    {
+                        <div class="card-body">
+                            <div>
+                                <h3 class="badge-primary">
+                                    @agent
+                                </h3>
+                                <div style="padding-top: 10px">
+                                    <button id="ViewCast" disabled="@(IsViewingCastOf(agent))" class="btn btn-success btn-sm" @onclick="@(() => OnViewCastClicked(agent))">
+                                        View cast
+                                    </button>
 
-                        <button id="StopViewCast" disabled="@(!IsViewingCastOf(agent))" class="btn btn-warning btn-sm" @onclick="@(() => OnStopViewCastClicked(agent))">
-                            Stop cast
-                        </button>
+                                    <button id="StopViewCast" disabled="@(!IsViewingCastOf(agent))" class="btn btn-warning btn-sm" @onclick="@(() => OnStopViewCastClicked(agent))">
+                                        Stop cast
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="card-body">
+                        <h3 class="card-header badge-warning">Nobody is casting!</h3>
                     </div>
-                </div>
+                }
             </div>
-        }
-    }
-    else
-    {
-        <div class="card-body">
-            <h3 class="card-header badge-warning">No Screencast Agents casting the screen now!</h3>
         </div>
-    }
+        <div class="col-lg-6">
+            <ChatWindow ChatMessages="messages" OnSendChat="SendChat"/>
+        </div>
+    </div>
 </div>
-<div class="border">
-    <img id='screenImage' src="@imageSource" />
+<div class="text-center">
+    <img id="screenImage" src="@imageSource" alt="No Image Available" />
 </div>

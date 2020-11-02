@@ -5,28 +5,28 @@ using System.Threading.Tasks;
 
 namespace BlazorRealTime.Server.Services
 {
-    public class ScreenCastManager
+    public class CastManager
     {
-        private List<Viewer> viewers = new List<Viewer>();
+        private readonly List<Viewer> _viewers = new List<Viewer>();
 
         public void AddViewer(string connectionId, string agentName)
         {
-            viewers.Add(new Viewer(connectionId, agentName));
+            _viewers.Add(new Viewer(connectionId, agentName));
         }
 
         public void RemoveViewer(string connectionId)
         {
-            viewers.Remove(viewers.First(i => i.ConnectionId == connectionId));
+            _viewers.Remove(_viewers.First(i => i.ConnectionId == connectionId));
         }
 
         public void RemoveViewerByAgent(string agentName)
         {
-            viewers.RemoveAll(i => i.AgentName == agentName);
+            _viewers.RemoveAll(i => i.AgentName == agentName);
         }
 
         public bool IsViewerExists(string agentName)
         {
-            return viewers.Any(i => i.AgentName == agentName);
+            return _viewers.Any(i => i.AgentName == agentName);
         }
 
     }

@@ -1,0 +1,12 @@
+﻿@page "/viewer"
+    <div style="margin-left:auto; margin-right:auto; width:50vw">
+        <h3 class="text-center">View Open Screen casts</h3>
+        <p>viewer name</p>
+        <input @bind-value="viewerName" @bind-value:event="oninput" />
+        <button @onclick="StartView">Begin</button>
+    </div>
+@if (isStartView)
+{
+    <hr />
+    <ViewSignalR ViewerName="@viewerName"/>
+}

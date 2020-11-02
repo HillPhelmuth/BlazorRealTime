@@ -1,0 +1,32 @@
+﻿@using BlazorRealTime.Shared
+<h4 class="text-center">Chat Window</h4>
+<p>message</p>
+<input @bind-value="message" @bind-value:event="oninput" @onkeyup="@(async (KeyboardEventArgs args) => await SendChat(args))"/>
+<button @onclick="SendChat">Send</button>
+<div style="width: 100%;padding:2px 5px; max-height: 15rem; overflow: scroll; line-height:1.3rem">
+    @foreach (var chatMessage in ChatMessages)
+    {
+        <div style="font-weight: 600; font-size:.9rem;color:darkblue">@chatMessage.Sender - </div>
+        <div style="font-size:1.1rem">@chatMessage.Message</div>
+    }
+</div>
+
+@code
+{
+    [Parameter]
+    public List<ChatMessage> ChatMessages { get; set; } = new List<ChatMessage>();
+    [Parameter]
+    public EventCallback<string> OnSendChat { get; set; }
+    private string message;
+
+    private async Task SendChat()
+    {
+        await OnSendChat.InvokeAsync(message);
+    }
+
+    private async Task SendChat(KeyboardEventArgs args)
+    {
+        if (args.Key.ToUpper() != "ENTER") return;
+        await OnSendChat.InvokeAsync(message);
+    }
+}

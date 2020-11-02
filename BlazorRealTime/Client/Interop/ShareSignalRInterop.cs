@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlazorRealTime.Shared;
 using Microsoft.JSInterop;
 
 namespace BlazorRealTime.Client.Interop
@@ -31,6 +32,20 @@ namespace BlazorRealTime.Client.Interop
         {
             var module = await screenModule.Value;
             await module.InvokeVoidAsync("stopStreamCast");
+        }
+
+        public async ValueTask SendChatMessage(string name, ChatMessage chatMessage)
+        {
+            var module = await screenModule.Value;
+            await module.InvokeVoidAsync("sendChat", name, chatMessage);
+        }
+        public async ValueTask DisposeAsync()
+        {
+            if (screenModule.IsValueCreated)
+            {
+                var module = await screenModule.Value;
+                await module.DisposeAsync();
+            }
         }
     }
 }
