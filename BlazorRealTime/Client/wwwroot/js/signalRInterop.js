@@ -5,7 +5,7 @@ let subject;
 let screenCastTimer;
 let isStreaming = false;
 let streaming = false;
-const frameRate = 250;
+const frameRate = 10;
 const maxWidth = 960;
 const maxHeight = 600;
 const video = document.getElementById("video");

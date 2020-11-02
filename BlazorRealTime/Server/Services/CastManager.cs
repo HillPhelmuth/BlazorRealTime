@@ -8,6 +8,17 @@ namespace BlazorRealTime.Server.Services
     public class CastManager
     {
         private readonly List<Viewer> _viewers = new List<Viewer>();
+        private int _messageCount;
+
+        public int MessageCount
+        {
+            get => _messageCount;
+            set
+            {
+                _messageCount = value;
+                Console.WriteLine($"Message count = {_messageCount}");
+            }
+        }
 
         public void AddViewer(string connectionId, string agentName)
         {

@@ -22,6 +22,8 @@
     private async Task SendChat()
     {
         await OnSendChat.InvokeAsync(message);
+        message = "";
+        await InvokeAsync(StateHasChanged);
     }
 
     private async Task SendChat(KeyboardEventArgs args)

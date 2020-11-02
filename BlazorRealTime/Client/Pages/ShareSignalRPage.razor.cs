@@ -16,7 +16,7 @@ namespace BlazorRealTime.Client.Pages
         private NavigationManager NavigationManager { get; set; }
         private ShareSignalRInterop ShareSignalR => new ShareSignalRInterop(JsRuntime);
         [Parameter]
-        public string AgentName { get; set; } = "adam";
+        public string AgentName { get; set; } = "empty";
         private bool isCasting = false;
         private bool notCasting => !isCasting;
         protected override async Task OnAfterRenderAsync(bool firstRender)

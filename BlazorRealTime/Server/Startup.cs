@@ -32,10 +32,10 @@ namespace BlazorRealTime.Server
                 o.MaximumReceiveMessageSize = 2024000;
                 o.StreamBufferCapacity = 20;
 
-            }).AddJsonProtocol(options =>
-            {
-                options.PayloadSerializerOptions.DefaultBufferSize = 2024000;
-            }); 
+            });//.AddJsonProtocol(options =>
+            //{
+            //    //options.PayloadSerializerOptions..DefaultBufferSize = 2024000;
+            //}); 
             services.AddControllersWithViews();
             services.AddResponseCompression(opts =>
             {

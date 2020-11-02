@@ -21,7 +21,7 @@ namespace BlazorRealTime.Server.Hubs
         {
             await Clients.Others.SendAsync("NewScreenCastAgent", agentName);
             await Groups.AddToGroupAsync(Context.ConnectionId, AgentGroupPrefix + agentName);
-            await Groups.AddToGroupAsync(Context.ConnectionId, agentName);
+            _castManager.MessageCount += 2;
         }
 
         public async Task RemoveScreenCastAgent(string agentName)
@@ -29,6 +29,7 @@ namespace BlazorRealTime.Server.Hubs
             await Clients.Others.SendAsync("RemoveScreenCastAgent", agentName);
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, AgentGroupPrefix + agentName);
             _castManager.RemoveViewerByAgent(agentName);
+            _castManager.MessageCount += 2;
         }
 
         public async Task AddScreenCastViewer(string agentName)
@@ -36,6 +37,7 @@ namespace BlazorRealTime.Server.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, agentName);
             _castManager.AddViewer(Context.ConnectionId, agentName);
             await Clients.Groups(AgentGroupPrefix + agentName).SendAsync("NewViewer");
+            _castManager.MessageCount += 2;
         }
 
         public async Task RemoveScreenCastViewer(string agentName)
@@ -43,19 +45,27 @@ namespace BlazorRealTime.Server.Hubs
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, agentName);
             _castManager.RemoveViewer(Context.ConnectionId);
             if (!_castManager.IsViewerExists(agentName))
+            {
                 await Clients.Groups(AgentGroupPrefix + agentName).SendAsync("NoViewer");
+                _castManager.MessageCount += 1;
+            }
+            _castManager.MessageCount += 1;
         }
         public async Task StreamCastData(IAsyncEnumerable<string> stream, string agentName)
         {
+            _castManager.MessageCount += 1;
             await foreach (var item in stream)
             {
                 await Clients.Group(agentName).SendAsync("OnStreamCastDataReceived", item);
+                _castManager.MessageCount += 1;
             }
         }
 
         public async Task SendChat(string agentName, ChatMessage message)
         {
             await Clients.Group(agentName).SendAsync("ReceiveMessage", message);
+            await Clients.Group(AgentGroupPrefix + agentName).SendAsync("ReceiveMessage", message);
+            _castManager.MessageCount += 2;
         }
     }
 }

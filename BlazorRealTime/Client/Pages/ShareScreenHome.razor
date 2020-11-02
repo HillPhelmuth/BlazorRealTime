@@ -9,17 +9,6 @@
         </div>
         <div class="col-6">
             <ChatWindow ChatMessages="@messages" OnSendChat="SendChat"/>
-            @*<h4>Chat Window</h4>
-            <p>message</p>
-            <input @bind-value="message" @bind-value:event="oninput"/>
-            <button @onclick="SendChat">Send</button>
-            <div style="width: 100%;padding:2px 5px; max-height: 15rem; overflow: scroll">
-                @foreach (var chatMessage in messages)
-                {
-                    <div style="font-weight: 600; font-size:.9rem;color:darkblue">@chatMessage.Sender</div><br />
-                    <div style="font-size:1.1rem">@chatMessage.Message</div>
-                }
-            </div>*@
         </div>
     </div>
 </div>
